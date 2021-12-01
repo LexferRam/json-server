@@ -1,7 +1,17 @@
+import { useEffect, useState } from 'react'
 import logo from './logo.svg';
 import './App.css';
+import axios from 'axios'
 
 function App() {
+  const [data, setData] = useState([])
+  useEffect(() => {
+    (async () => {
+      const res = await axios.get('http://localhost:3001/posts')
+      console.table(res.data)
+      setData(res.data)
+    })()
+  }, [])
   return (
     <div className="App">
       <header className="App-header">
@@ -17,6 +27,9 @@ function App() {
         >
           Learn React
         </a>
+        {data.map(ele => (
+          <p key={ele.id}>{ele.title}</p>
+        ))}
       </header>
     </div>
   );
